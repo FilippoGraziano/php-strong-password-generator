@@ -68,52 +68,20 @@ require_once "./functions.php"
 
     <?php
 
-    if (!$numbersCheck && !$lettersCheck && !$symbolsCheck) {
-
-        $_SESSION["password"] = generateCasualPassword($password_lenght);
-            
-    } else if ($numbersCheck && $lettersCheck) {
-
-        $_SESSION["password"] = generateCasualNumbersLetters($password_lenght);
-
-    } else if ($numbersCheck && $symbolsCheck) {
-
-        $_SESSION["password"] = generateCasualNumbersSymbols($password_lenght);
-
-    } else if ($lettersCheck && $symbolsCheck) {
-
-        $_SESSION["password"] = generateCasualLettersSymbols($password_lenght);
-
-    } else if ($numbersCheck) {
-
-        $_SESSION["password"] = generateCasualNumbers($password_lenght);
-
-    } else if ($lettersCheck) {
-
-        $_SESSION["password"] = generateCasualLetters($password_lenght);
-
-    } else if ($symbolsCheck) {
-
-        $_SESSION["password"] = generateCasualSymbols($password_lenght);
-
-    }
-
+    $_SESSION["password"] = generateCasualPassword($password_lenght, $numbersCheck, $lettersCheck, $symbolsCheck);
 
     if ($_SESSION["password"] == "") {
 
         echo "You should generate a password";
-
     } else if (strlen($_SESSION["password"]) < 8) {
-        
+
         echo "You should generate a password more safe, ";
         echo $password_lenght == 1 ? "$password_lenght charset" : "$password_lenght charsets";
         echo " it's too short";
-
     } else {
 
         echo "Your password was generated! </br>";
         echo "<a href='./result.php'>Go to Show your password</a>";
-
     }
 
     ?>
