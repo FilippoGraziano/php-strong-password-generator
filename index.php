@@ -6,6 +6,22 @@ if (isset($_GET['password_lenght']) && is_numeric($_GET['password_lenght']) && $
     $password_lenght = (int) $_GET['password_lenght'];
 };
 
+$numbersCheck = false;
+if (isset($_GET["numbers"]) && $_GET["numbers"] == "on") {
+    $numbersCheck = true;
+}
+
+$lettersCheck = false;
+if (isset($_GET["letters"]) && $_GET["letters"] == "on") {
+    $lettersCheck = true;
+}
+
+$symbolsCheck = false;
+if (isset($_GET["symbols"]) && $_GET["symbols"] == "on") {
+    $symbolsCheck = true;
+}
+
+
 session_start();
 
 require_once "./functions.php"
@@ -31,17 +47,61 @@ require_once "./functions.php"
             <input type="number" name="password_lenght" min="1">
         </label>
 
+        <label>
+            Only numbers
+            <input type="checkbox" name="numbers">
+        </label>
+
+        <label>
+            Only letters
+            <input type="checkbox" name="letters">
+        </label>
+
+        <label>
+            Symbols
+            <input type="checkbox" name="symbols">
+        </label>
+
         <button type="submit">Submit</button>
 
     </form>
 
     <?php
 
-    $_SESSION["password"] = generateCasualPassword($password_lenght);
+    if (!$numbersCheck && !$lettersCheck && !$symbolsCheck) {
+
+        $_SESSION["password"] = generateCasualPassword($password_lenght);
+            
+    } else if ($numbersCheck && $lettersCheck) {
+
+        $_SESSION["password"] = generateCasualNumbersLetters($password_lenght);
+
+    } else if ($numbersCheck && $symbolsCheck) {
+
+        $_SESSION["password"] = generateCasualNumbersSymbols($password_lenght);
+
+    } else if ($lettersCheck && $symbolsCheck) {
+
+        $_SESSION["password"] = generateCasualLettersSymbols($password_lenght);
+
+    } else if ($numbersCheck) {
+
+        $_SESSION["password"] = generateCasualNumbers($password_lenght);
+
+    } else if ($lettersCheck) {
+
+        $_SESSION["password"] = generateCasualLetters($password_lenght);
+
+    } else if ($symbolsCheck) {
+
+        $_SESSION["password"] = generateCasualSymbols($password_lenght);
+
+    }
+
 
     if ($_SESSION["password"] == "") {
 
-        echo "You shold generate a password";
+        echo "You should generate a password";
 
     } else if (strlen($_SESSION["password"]) < 8) {
         
