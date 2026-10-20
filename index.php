@@ -81,7 +81,7 @@ require_once "./functions.php"
     } else {
 
         echo "Your password was generated! </br>";
-        echo "<a href='./result.php'>Go to Show your password</a>";
+        echo "<a href='./result.php'>Go to see your password</a>";
     }
 
     ?>
