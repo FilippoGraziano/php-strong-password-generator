@@ -6,6 +6,8 @@ if (isset($_GET['password_lenght']) && is_numeric($_GET['password_lenght']) && $
     $password_lenght = (int) $_GET['password_lenght'];
 };
 
+session_start();
+
 require_once "./functions.php"
 
 ?>
@@ -35,9 +37,24 @@ require_once "./functions.php"
 
     <?php
 
-    $password = generateCasualPassword($password_lenght);
+    $_SESSION["password"] = generateCasualPassword($password_lenght);
 
-    echo strlen($password) != 0 ? "Questa è la password generata: $password" : "Genera una nuova password";
+    if ($_SESSION["password"] == "") {
+
+        echo "You shold generate a password";
+
+    } else if (strlen($_SESSION["password"]) < 8) {
+        
+        echo "You should generate a password more safe, ";
+        echo $password_lenght == 1 ? "$password_lenght charset" : "$password_lenght charsets";
+        echo " it's too short";
+
+    } else {
+
+        echo "Your password was generated! </br>";
+        echo "<a href='./result.php'>Go to Show your password</a>";
+
+    }
 
     ?>
 
