@@ -44,7 +44,7 @@ require_once "./functions.php"
 
         <label>
             Insert the lenght for the password:
-            <input type="number" name="password_lenght" min="1">
+            <input type="number" value="1" name="password_lenght" min="1">
         </label>
 
         <label>
